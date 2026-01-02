@@ -1,3 +1,5 @@
+import os
+import sys
 import math
 import webbrowser
 import subprocess
@@ -10,8 +12,18 @@ from kivymd.uix.label import MDLabel
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivy.core.text import LabelBase
 
-# 1. フォントパスの定義
-JAPANESE_FONT = "/mnt/c/Windows/Fonts/msjh.ttc"
+# 実行ファイルのディレクトリを取得
+if getattr(sys, 'frozen', False):
+    # アプリとして固められている場合
+    base_path = sys._MEIPASS
+else:
+    # 通常の実行時
+    base_path = os.path.dirname(os.path.abspath(__file__))
+
+# フォントパスを相対的に指定
+JAPANESE_FONT = os.path.join(base_path, "fonts", "NotoSansJP-Regular.otf")
+
+# Kivyに登録
 LabelBase.register(name="Roboto", fn_regular=JAPANESE_FONT)
 LabelBase.register(name="Japanese", fn_regular=JAPANESE_FONT)
 
